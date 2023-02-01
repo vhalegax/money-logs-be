@@ -1,5 +1,10 @@
 import express, { Application, Express, Request, Response } from "express";
+
 import dotenv from "dotenv";
+import morgan from "morgan"; //* Lib for logging
+import helmet from "helmet"; //* Lib for Security
+import cors from "cors"; //* Lib for CORS
+import compression from "compression"; 
 
 dotenv.config();
 
@@ -40,6 +45,11 @@ class App {
 
     // for parsing application//form-data
     // this.app.use(express.static("public"));
+
+    this.app.use(morgan("dev"));
+    this.app.use(compression());
+    this.app.use(helmet());
+    this.app.use(cors());
   }
 
   protected routes(): void {
