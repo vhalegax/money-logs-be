@@ -4,7 +4,15 @@ import dotenv from "dotenv";
 import morgan from "morgan"; //* Lib for logging
 import helmet from "helmet"; //* Lib for Security
 import cors from "cors"; //* Lib for CORS
-import compression from "compression"; 
+import compression from "compression";
+
+//* Routes
+
+import CategoryRoutes from "./routers/CategoryRoutes";
+import MoneyLogRoutes from "./routers/MoneyLogRoutes";
+import UserLogRoutes from "./routers/UserRoutes";
+
+//* Main
 
 dotenv.config();
 
@@ -57,11 +65,9 @@ class App {
       res.send("Hello World");
     });
 
-    this.app.route("/categories").post((req: Request, res: Response) => {
-      console.log("Routes : add category");
-      console.log(req.body);
-      res.send(req.body);
-    });
+    this.app.use("/categories", CategoryRoutes);
+    this.app.use("/money-logs", MoneyLogRoutes);
+    this.app.use("/users", UserLogRoutes);
   }
 }
 

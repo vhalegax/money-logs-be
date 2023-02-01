@@ -9,6 +9,11 @@ const morgan_1 = __importDefault(require("morgan")); //* Lib for logging
 const helmet_1 = __importDefault(require("helmet")); //* Lib for Security
 const cors_1 = __importDefault(require("cors")); //* Lib for CORS
 const compression_1 = __importDefault(require("compression"));
+//* Routes
+const CategoryRoutes_1 = __importDefault(require("./routers/CategoryRoutes"));
+const MoneyLogRoutes_1 = __importDefault(require("./routers/MoneyLogRoutes"));
+const UserRoutes_1 = __importDefault(require("./routers/UserRoutes"));
+//* Main
 dotenv_1.default.config();
 const PORT = 3000;
 //* Function App
@@ -44,11 +49,9 @@ class App {
         this.app.route("/").get((req, res) => {
             res.send("Hello World");
         });
-        this.app.route("/categories").post((req, res) => {
-            console.log("Routes : add category");
-            console.log(req.body);
-            res.send(req.body);
-        });
+        this.app.use("/categories", CategoryRoutes_1.default);
+        this.app.use("/money-logs", MoneyLogRoutes_1.default);
+        this.app.use("/users", UserRoutes_1.default);
     }
 }
 const app = new App().app;
