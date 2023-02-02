@@ -1,6 +1,8 @@
 import { Router, Request, Response } from "express";
 import IntRouter from "./../interfaces/IntRoute";
 
+import MoneyLogController from "../controller/MoneyLogController";
+
 class MoneyLogRoutes implements IntRouter {
   public router: Router;
 
@@ -10,26 +12,11 @@ class MoneyLogRoutes implements IntRouter {
   }
 
   public routes(): void {
-    this.router.get("/", (req: Request, res: Response) => {
-      res.send("index money logs");
-    });
-
-    this.router.get("/:id", (req, res) => {
-      res.send("detail money log");
-    });
-
-    this.router.post("/", (req, res) => {
-      console.log(req.body);
-      res.send("add money log");
-    });
-
-    this.router.put("/", (req, res) => {
-      res.send("edit money log");
-    });
-
-    this.router.delete("/", (req, res) => {
-      res.send("delete money log");
-    });
+    this.router.get("/", MoneyLogController.index);
+    this.router.get("/:id", MoneyLogController.detail);
+    this.router.post("/", MoneyLogController.create);
+    this.router.put("/", MoneyLogController.update);
+    this.router.delete("/", MoneyLogController.delete);
   }
 }
 

@@ -1,6 +1,8 @@
 import { Router, Request, Response } from "express";
 import IntRouter from "./../interfaces/IntRoute";
 
+import CategoryController from "../controller/CategoryController";
+
 class CategoryRoutes implements IntRouter {
   public router: Router;
 
@@ -10,26 +12,11 @@ class CategoryRoutes implements IntRouter {
   }
 
   public routes(): void {
-    this.router.get("/", (req: Request, res: Response) => {
-      res.send("index categories");
-    });
-
-    this.router.get("/:id", (req, res) => {
-      res.send("detail category");
-    });
-
-    this.router.post("/", (req, res) => {
-      console.log(req.body);
-      res.send("add category");
-    });
-
-    this.router.put("/", (req, res) => {
-      res.send("edit category");
-    });
-
-    this.router.delete("/", (req, res) => {
-      res.send("delete category");
-    });
+    this.router.get("/", CategoryController.index);
+    this.router.get("/:id", CategoryController.detail);
+    this.router.post("/", CategoryController.create);
+    this.router.put("/", CategoryController.update);
+    this.router.delete("/", CategoryController.delete);
   }
 }
 

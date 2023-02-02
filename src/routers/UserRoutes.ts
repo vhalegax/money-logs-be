@@ -1,6 +1,8 @@
 import { Router, Request, Response } from "express";
 import IntRouter from "./../interfaces/IntRoute";
 
+import UserController from "../controller/UserController";
+
 class UserRoutes implements IntRouter {
   public router: Router;
 
@@ -10,26 +12,11 @@ class UserRoutes implements IntRouter {
   }
 
   public routes(): void {
-    this.router.get("/", (req: Request, res: Response) => {
-      res.send("index users");
-    });
-
-    this.router.get("/:id", (req, res) => {
-      res.send("detail user");
-    });
-
-    this.router.post("/", (req, res) => {
-      console.log(req.body);
-      res.send("add user");
-    });
-
-    this.router.put("/", (req, res) => {
-      res.send("edit user");
-    });
-
-    this.router.delete("/", (req, res) => {
-      res.send("delete user");
-    });
+    this.router.get("/", UserController.index);
+    this.router.get("/:id", UserController.detail);
+    this.router.post("/", UserController.create);
+    this.router.put("/", UserController.update);
+    this.router.delete("/", UserController.delete);
   }
 }
 
