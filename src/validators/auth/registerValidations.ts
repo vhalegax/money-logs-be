@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express'
 import { check, validationResult, CustomValidator } from 'express-validator'
 
-import { groupBy } from 'lodash'
+import generateResBadReq from '../../helpers/generateResBadReq'
 
 const db = require('../../models')
 
@@ -55,13 +55,8 @@ export default async function (
   }
 
   if (!errors.isEmpty()) {
-    const errorResponse = groupBy(errors.array(), (value: any) => {
-      return value.param
-    })
-
-    return res.status(422).send({
-      errors: errorResponse
-    })
+    const response = generateResBadReq(errors.array())
+    return res.status(422).send(response)
   }
 
   next()
