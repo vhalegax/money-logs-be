@@ -12,6 +12,7 @@ import compression from 'compression'
 import CategoryRoutes from './routers/CategoryRoutes'
 import MoneyLogRoutes from './routers/MoneyLogRoutes'
 import UserLogRoutes from './routers/UserRoutes'
+import AuthRoutes from './routers/AuthRoutes'
 
 //* Middleware
 import authMiddleware from './middleware/auth'
@@ -69,6 +70,7 @@ class App {
       res.send('Hello World')
     })
 
+    this.app.use('/v1/auth', AuthRoutes)
     this.app.use('/categories', CategoryRoutes)
     this.app.use('/money-logs', MoneyLogRoutes)
     this.app.use('/users', UserLogRoutes)

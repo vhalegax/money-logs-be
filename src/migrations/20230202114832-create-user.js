@@ -32,6 +32,18 @@ module.exports = {
         type: Sequelize.DATE
       }
     })
+
+    await queryInterface.addConstraint('users', {
+      fields: ['username'],
+      type: 'unique',
+      name: 'unique_username'
+    })
+
+    await queryInterface.addConstraint('users', {
+      fields: ['email'],
+      type: 'unique',
+      name: 'unique_email'
+    })
   },
   async down(queryInterface, Sequelize) {
     await queryInterface.dropTable('users')

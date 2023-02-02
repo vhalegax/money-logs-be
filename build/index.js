@@ -14,6 +14,7 @@ const compression_1 = __importDefault(require("compression"));
 const CategoryRoutes_1 = __importDefault(require("./routers/CategoryRoutes"));
 const MoneyLogRoutes_1 = __importDefault(require("./routers/MoneyLogRoutes"));
 const UserRoutes_1 = __importDefault(require("./routers/UserRoutes"));
+const AuthRoutes_1 = __importDefault(require("./routers/AuthRoutes"));
 //* Main
 dotenv_1.default.config();
 const PORT = 3000;
@@ -50,6 +51,7 @@ class App {
         this.app.route('/').get((req, res) => {
             res.send('Hello World');
         });
+        this.app.use('/v1/auth', AuthRoutes_1.default);
         this.app.use('/categories', CategoryRoutes_1.default);
         this.app.use('/money-logs', MoneyLogRoutes_1.default);
         this.app.use('/users', UserRoutes_1.default);
