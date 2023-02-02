@@ -12,6 +12,9 @@ import CategoryRoutes from './routers/CategoryRoutes'
 import MoneyLogRoutes from './routers/MoneyLogRoutes'
 import UserLogRoutes from './routers/UserRoutes'
 
+//* middleware
+import authMiddleware from './middleware/auth'
+
 //* Main
 
 dotenv.config()
