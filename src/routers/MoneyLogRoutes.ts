@@ -1,16 +1,7 @@
-import { Router, Request, Response } from 'express'
-import IntRouter from './../interfaces/IntRoute'
-
+import BaseRoutes from './BaseRoutes'
 import MoneyLogController from '../controller/MoneyLogController'
 
-class MoneyLogRoutes implements IntRouter {
-  public router: Router
-
-  constructor() {
-    this.router = Router()
-    this.routes()
-  }
-
+class MoneyLogRoutes extends BaseRoutes {
   public routes(): void {
     this.router.get('/', MoneyLogController.index)
     this.router.get('/:id', MoneyLogController.detail)
