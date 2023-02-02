@@ -15,7 +15,7 @@ import UserLogRoutes from './routers/UserRoutes'
 import AuthRoutes from './routers/AuthRoutes'
 
 //* Middleware
-import authMiddleware from './middleware/auth'
+import authMiddleware from './middleware/authMiddleware'
 
 //* Main
 
@@ -71,7 +71,7 @@ class App {
     })
 
     this.app.use('/v1/auth', AuthRoutes)
-    this.app.use('/categories', CategoryRoutes)
+    this.app.use('/v1/categories', authMiddleware, CategoryRoutes)
     this.app.use('/money-logs', MoneyLogRoutes)
     this.app.use('/users', UserLogRoutes)
   }

@@ -56,7 +56,7 @@ export default async function (
 
   if (!errors.isEmpty()) {
     const response = generateResBadReq(errors.array())
-    return res.status(422).send(response)
+    return res.status(400).send(response)
   }
 
   next()

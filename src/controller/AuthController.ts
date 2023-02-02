@@ -26,7 +26,7 @@ class AuthController {
         ]
 
         const response = generateResBadReq(errors)
-        return res.status(422).send(response)
+        return res.status(400).send(response)
       }
 
       if (user) {
@@ -44,7 +44,7 @@ class AuthController {
           ]
 
           const response = generateResBadReq(errors)
-          return res.status(422).send(response)
+          return res.status(400).send(response)
         }
       }
 

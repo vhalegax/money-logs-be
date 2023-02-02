@@ -1,9 +1,7 @@
 import { Request, Response, NextFunction } from 'express'
-import { check, validationResult, CustomValidator } from 'express-validator'
+import { check, validationResult } from 'express-validator'
 
 import generateResBadReq from '../../helpers/generateResBadReq'
-
-const db = require('../../models')
 
 export default async function (
   req: Request,
@@ -23,7 +21,7 @@ export default async function (
 
   if (!errors.isEmpty()) {
     const response = generateResBadReq(errors.array())
-    return res.status(422).send(response)
+    return res.status(400).send(response)
   }
 
   next()
