@@ -40,18 +40,18 @@ class App {
         // this.app.use(express.urlencoded());
         // for parsing application//form-data
         // this.app.use(express.static("public"));
-        this.app.use((0, morgan_1.default)("dev"));
+        this.app.use((0, morgan_1.default)('dev'));
         this.app.use((0, compression_1.default)());
         this.app.use((0, helmet_1.default)());
         this.app.use((0, cors_1.default)());
     }
     routes() {
-        this.app.route("/").get((req, res) => {
-            res.send("Hello World");
+        this.app.route('/').get((req, res) => {
+            res.send('Hello World');
         });
-        this.app.use("/categories", CategoryRoutes_1.default);
-        this.app.use("/money-logs", MoneyLogRoutes_1.default);
-        this.app.use("/users", UserRoutes_1.default);
+        this.app.use('/categories', CategoryRoutes_1.default);
+        this.app.use('/money-logs', MoneyLogRoutes_1.default);
+        this.app.use('/users', UserRoutes_1.default);
     }
 }
 const app = new App().app;

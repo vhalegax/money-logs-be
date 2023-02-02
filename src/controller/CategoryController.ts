@@ -1,26 +1,26 @@
-import { Request, Response } from "express";
+import { Request, Response } from 'express'
 
 class CategoryController {
   index(req: Request, res: Response) {
-    res.send("index");
+    res.send('index')
   }
 
   detail(req: Request, res: Response) {
-    res.send("detail");
+    res.send('detail')
   }
 
   create(req: Request, res: Response) {
-    console.log(req.body);
-    res.send("add");
+    console.log(req.body)
+    res.send('add')
   }
 
   update(req: Request, res: Response) {
-    res.send("edit");
+    res.send('edit')
   }
 
   delete(req: Request, res: Response) {
-    res.send("delete");
+    res.send('delete')
   }
 }
 
-export default new CategoryController();
+export default new CategoryController()

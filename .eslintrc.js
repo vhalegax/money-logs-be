@@ -4,11 +4,9 @@ module.exports = {
     node: true
   },
   extends: 'standard-with-typescript',
-  overrides: [
-  ],
+  overrides: [],
   parserOptions: {
     ecmaVersion: 'latest'
   },
-  rules: {
-  }
+  rules: {}
 }

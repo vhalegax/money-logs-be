@@ -1,5 +1,5 @@
 interface IntRoute {
-  routes(): void;
+  routes(): void
 }
 
-export default IntRoute;
+export default IntRoute
