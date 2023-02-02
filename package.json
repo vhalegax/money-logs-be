@@ -9,7 +9,10 @@
     "start": "node build/index.js",
     "tsc": "rm -rf build/ && tsc",
     "ts": "rm -rf build/ && tsc -w",
-    "dev": "nodemon build/index.js"
+    "dev": "nodemon build/index.js",
+    "migrate": "npx sequelize-cli db:migrate",
+    "seed": "npx sequelize-cli db:seed:all",
+    "seed:undo": "npx sequelize-cli db:seed:undo:all"
   },
   "author": "Stephanus Wisnu",
   "license": "ISC",
@@ -21,7 +24,9 @@
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "helmet": "^6.0.1",
-    "morgan": "^1.10.0"
+    "morgan": "^1.10.0",
+    "mysql2": "^3.1.0",
+    "sequelize": "^6.28.0"
   },
   "devDependencies": {
     "@types/compression": "^1.7.2",

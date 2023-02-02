@@ -1,3 +1,4 @@
+//* Libs
 import express, { Application, Express, Request, Response } from 'express'
 
 import dotenv from 'dotenv'
@@ -12,7 +13,7 @@ import CategoryRoutes from './routers/CategoryRoutes'
 import MoneyLogRoutes from './routers/MoneyLogRoutes'
 import UserLogRoutes from './routers/UserRoutes'
 
-//* middleware
+//* Middleware
 import authMiddleware from './middleware/auth'
 
 //* Main
