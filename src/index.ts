@@ -23,7 +23,8 @@ dotenv.config()
 
 const PORT: number = 3000
 
-//* Function App
+//* -----------------------------------------------------------------------------------
+//* Contoh Function App
 
 // const app: Express = express();
 
@@ -37,7 +38,9 @@ const PORT: number = 3000
 // });
 
 //* End
+//* -----------------------------------------------------------------------------------
 
+//* -----------------------------------------------------------------------------------
 //* Class Base App / OOP
 
 class App {
@@ -66,14 +69,21 @@ class App {
   }
 
   protected routes(): void {
-    this.app.route('/').get((req: Request, res: Response) => {
-      res.send('Hello World')
-    })
+    /**
+     * Cara kerja APP Class Base.
+     * 1. Saat APP pertama kali menyala dia akan membuat New Class Routes (hanya 1x new class saat turn on app)
+     * 2. Kemudian membuat New Class Controller (hanya 1x new class saat turn on app).
+     */
+
+    /**
+     * Notes !
+     * Penulisan category routes sama dengan penulisan routes yang lain, hanya lebih effisien penulisan routes yang lain.
+     */
 
     this.app.use('/v1/auth', AuthRoutes)
-    this.app.use('/v1/categories', authMiddleware, CategoryRoutes)
-    this.app.use('/money-logs', MoneyLogRoutes)
-    this.app.use('/users', UserLogRoutes)
+    this.app.use('/v1/categories', authMiddleware, new CategoryRoutes().router)
+    this.app.use('/v1/money-logs', authMiddleware, MoneyLogRoutes)
+    this.app.use('/v1/users', authMiddleware, UserLogRoutes)
   }
 }
 

@@ -24,5 +24,5 @@ export default async function (
     return res.status(400).send(response)
   }
 
-  next()
+  return next()
 }

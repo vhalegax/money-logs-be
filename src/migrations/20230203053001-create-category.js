@@ -2,24 +2,24 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('users', {
+    await queryInterface.createTable('categories', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      username: {
+      name: {
         allowNull: false,
         type: Sequelize.STRING
       },
-      password: {
+      user_id: {
         allowNull: false,
-        type: Sequelize.STRING
-      },
-      email: {
-        allowNull: false,
-        type: Sequelize.STRING
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'users',
+          key: 'id'
+        }
       },
       created_at: {
         allowNull: false,
@@ -28,25 +28,16 @@ module.exports = {
       updated_at: {
         allowNull: false,
         type: Sequelize.DATE
-      },
-      deleted_at: {
-        type: Sequelize.DATE
       }
     })
 
-    await queryInterface.addConstraint('users', {
-      fields: ['username'],
+    await queryInterface.addConstraint('categories', {
+      fields: ['name', 'user_id'],
       type: 'unique',
-      name: 'unique_username'
-    })
-
-    await queryInterface.addConstraint('users', {
-      fields: ['email'],
-      type: 'unique',
-      name: 'unique_email'
+      name: 'unique_name_user-id'
     })
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('users')
+    await queryInterface.dropTable('categories')
   }
 }

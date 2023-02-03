@@ -20,7 +20,8 @@ const authMiddleware = (
       return res.status(401).send('Unauthorized')
     }
 
-    next()
+    res.locals.credential = credential
+    return next()
   } catch (err) {
     return res.status(401).send(err)
   }

@@ -20,7 +20,8 @@ const authMiddleware_1 = __importDefault(require("./middleware/authMiddleware"))
 //* Main
 dotenv_1.default.config();
 const PORT = 3000;
-//* Function App
+//* -----------------------------------------------------------------------------------
+//* Contoh Function App
 // const app: Express = express();
 // app.get("/", (req: Request, res: Response) => {
 //   res.send("Express + TypeScript Server edit");
@@ -30,6 +31,8 @@ const PORT = 3000;
 //   console.log(`[server]: Server is running at http://localhost:${port}`);
 // });
 //* End
+//* -----------------------------------------------------------------------------------
+//* -----------------------------------------------------------------------------------
 //* Class Base App / OOP
 class App {
     constructor() {
@@ -50,13 +53,19 @@ class App {
         this.app.use((0, cors_1.default)());
     }
     routes() {
-        this.app.route('/').get((req, res) => {
-            res.send('Hello World');
-        });
+        /**
+         * Cara kerja APP Class Base.
+         * 1. Saat APP pertama kali menyala dia akan membuat New Class Routes (hanya 1x new class saat turn on app)
+         * 2. Kemudian membuat New Class Controller (hanya 1x new class saat turn on app).
+         */
+        /**
+         * Notes !
+         * Penulisan category routes sama dengan penulisan routes yang lain, hanya lebih effisien penulisan routes yang lain.
+         */
         this.app.use('/v1/auth', AuthRoutes_1.default);
-        this.app.use('/v1/categories', authMiddleware_1.default, CategoryRoutes_1.default);
-        this.app.use('/money-logs', MoneyLogRoutes_1.default);
-        this.app.use('/users', UserRoutes_1.default);
+        this.app.use('/v1/categories', authMiddleware_1.default, new CategoryRoutes_1.default().router);
+        this.app.use('/v1/money-logs', authMiddleware_1.default, MoneyLogRoutes_1.default);
+        this.app.use('/v1/users', authMiddleware_1.default, UserRoutes_1.default);
     }
 }
 const app = new App().app;
