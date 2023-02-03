@@ -1,7 +1,7 @@
 import { Request, Response } from 'express'
 import { Op } from 'sequelize'
 
-import generateResBadReq from '../helpers/generateResBadReq'
+import generateResponseError from '../helpers/generateResponseError'
 import Auth from '../helpers/Auth'
 
 const db = require('../models')
@@ -25,8 +25,7 @@ class AuthController {
           }
         ]
 
-        const response = generateResBadReq(errors)
-        return res.status(400).send(response)
+        return generateResponseError({ res, errors })
       }
 
       if (user) {
@@ -43,8 +42,7 @@ class AuthController {
             }
           ]
 
-          const response = generateResBadReq(errors)
-          return res.status(400).send(response)
+          return generateResponseError({ res, errors })
         }
       }
 
@@ -58,7 +56,8 @@ class AuthController {
       return res.status(200).send({ token })
     } catch (e) {
       console.log(e)
-      return res.status(500).send('Failed to login, please try again')
+      const message: string = 'Failed to login, please try again'
+      return generateResponseError({ res, message, status: 500 })
     }
   }
 
@@ -82,7 +81,8 @@ class AuthController {
       return res.send(createUser)
     } catch (e) {
       console.log(e)
-      return res.status(500).send('Failed to create user, please try again')
+      const message: string = 'Failed to register, please try again'
+      return generateResponseError({ res, message, status: 500 })
     }
   }
 }

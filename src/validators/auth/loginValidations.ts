@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express'
 import { check, validationResult } from 'express-validator'
 
-import generateResBadReq from '../../helpers/generateResBadReq'
+import generateResponseError from '../../helpers/generateResponseError'
 
 export default async function (
   req: Request,
@@ -20,8 +20,7 @@ export default async function (
   let errors = validationResult(req)
 
   if (!errors.isEmpty()) {
-    const response = generateResBadReq(errors.array())
-    return res.status(400).send(response)
+    return generateResponseError({ res, errors: errors.array() })
   }
 
   return next()

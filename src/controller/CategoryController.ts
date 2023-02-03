@@ -1,6 +1,6 @@
 import { Request, Response } from 'express'
 
-import generateResBadReq from '../helpers/generateResBadReq'
+import generateResponseError from '../helpers/generateResponseError'
 
 const db = require('../models')
 
@@ -36,9 +36,8 @@ class CategoryController {
       return res.send(categories)
     } catch (e) {
       console.log(e)
-      return res.status(500).send({
-        message: 'Failed to get categories, please try again'
-      })
+      const message: string = 'Failed to get categories, please try again'
+      return generateResponseError({ res, message, status: 500 })
     }
   }
 
@@ -55,16 +54,15 @@ class CategoryController {
       })
 
       if (!category) {
-        const response = generateResBadReq([], 'Category not found')
-        return res.status(404).send(response)
+        const message: string = 'Category not found'
+        return generateResponseError({ res, message, status: 404 })
       }
 
       return res.send(category)
     } catch (e) {
       console.log(e)
-      return res.status(500).send({
-        message: 'Failed to get category, please try again'
-      })
+      const message: string = 'Failed to get category, please try again'
+      return generateResponseError({ res, message, status: 500 })
     }
   }
 
@@ -85,9 +83,8 @@ class CategoryController {
       })
     } catch (e) {
       console.log(e)
-      return res.status(500).send({
-        message: 'Failed to create category, please try again'
-      })
+      const message: string = 'Failed to create category, please try again'
+      return generateResponseError({ res, message, status: 500 })
     }
   }
 
@@ -114,9 +111,8 @@ class CategoryController {
       })
     } catch (e) {
       console.log(e)
-      return res.status(500).send({
-        message: 'Failed to update category, please try again'
-      })
+      const message: string = 'Failed to update category, please try again'
+      return generateResponseError({ res, message, status: 500 })
     }
   }
 

@@ -2,24 +2,33 @@ import { Request, Response, NextFunction } from 'express'
 import { check, validationResult, CustomValidator } from 'express-validator'
 import { Op } from 'sequelize'
 
-import generateResBadReq from '../../helpers/generateResBadReq'
+import generateResponseError from '../../helpers/generateResponseError'
 
 const db = require('../../models')
 
-const nameIsExist: CustomValidator = async (value, { req }) => {
+const categoryCheck: CustomValidator = async (value, { req }) => {
   const categoryId = req.params?.id
   const userId = req.res.locals.credential.id
-  const user = await db.Category.findOne({
+
+  const category = await db.Category.findOne({
     where: {
-      name: value,
-      user_id: userId,
-      [Op.not]: {
-        id: categoryId
-      }
+      id: categoryId
     }
   })
 
-  if (user) throw new Error('Name already in use')
+  if (!category) throw new Error('Category id not found')
+
+  const categoryNameIsExist = await db.Category.findOne({
+    where: {
+      [Op.not]: {
+        id: categoryId
+      },
+      name: value,
+      user_id: userId
+    }
+  })
+
+  if (categoryNameIsExist) throw new Error('Category name already used')
 
   return true
 }
@@ -38,13 +47,12 @@ export default async function (
 
   //* Run custom check, after manual check success without error
   if (errors.isEmpty()) {
-    await Promise.all([check('name').custom(nameIsExist).run(req)])
+    await Promise.all([check('name').custom(categoryCheck).run(req)])
     errors = validationResult(req)
   }
 
   if (!errors.isEmpty()) {
-    const response = generateResBadReq(errors.array())
-    return res.status(400).send(response)
+    return generateResponseError({ res, errors: errors.array() })
   }
 
   return next()
