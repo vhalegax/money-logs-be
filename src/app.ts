@@ -23,24 +23,6 @@ dotenv.config()
 
 const PORT: number = 3000
 
-//* -----------------------------------------------------------------------------------
-//* Contoh Function App
-
-// const app: Express = express();
-
-// app.get("/", (req: Request, res: Response) => {
-//   res.send("Express + TypeScript Server edit");
-// });
-
-// app.listen(port, () => {
-//   console.log(alex);
-//   console.log(`[server]: Server is running at http://localhost:${port}`);
-// });
-
-//* End
-//* -----------------------------------------------------------------------------------
-
-//* -----------------------------------------------------------------------------------
 //* Class Base App / OOP
 
 class App {
@@ -72,6 +54,24 @@ class App {
 }
 
 const app = new App().app
+
 app.listen(PORT, (): void => {
   console.log(`Server is running at port : ${PORT}`)
 })
+
+//* -----------------------------------------------------------------------------------
+//* Contoh Function App
+
+// const app: Express = express();
+
+// app.get("/", (req: Request, res: Response) => {
+//   res.send("Express + TypeScript Server edit");
+// });
+
+// app.listen(port, () => {
+//   console.log(alex);
+//   console.log(`[server]: Server is running at http://localhost:${port}`);
+// });
+
+//* End
+//* -----------------------------------------------------------------------------------
