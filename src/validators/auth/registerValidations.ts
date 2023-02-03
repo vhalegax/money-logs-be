@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express'
 import { check, validationResult, CustomValidator } from 'express-validator'
 
-import generateResponseError from '../../helpers/generateResponseError'
+import ApiResponse from '../../helpers/ApiResponse'
 
 const db = require('../../models')
 
@@ -55,7 +55,7 @@ export default async function (
   }
 
   if (!errors.isEmpty()) {
-    return generateResponseError({ res, errors: errors.array() })
+    return ApiResponse.error({ res, errors: errors.array() })
   }
 
   return next()

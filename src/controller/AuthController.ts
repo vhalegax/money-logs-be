@@ -1,7 +1,7 @@
 import { Request, Response } from 'express'
 import { Op } from 'sequelize'
 
-import generateResponseError from '../helpers/generateResponseError'
+import ApiResponse from '../helpers/ApiResponse'
 import Auth from '../helpers/Auth'
 
 const db = require('../models')
@@ -25,7 +25,7 @@ class AuthController {
           }
         ]
 
-        return generateResponseError({ res, errors })
+        return ApiResponse.error({ res, errors })
       }
 
       if (user) {
@@ -42,7 +42,7 @@ class AuthController {
             }
           ]
 
-          return generateResponseError({ res, errors })
+          return ApiResponse.error({ res, errors })
         }
       }
 
@@ -53,11 +53,11 @@ class AuthController {
         user.password
       )
 
-      return res.status(200).send({ token })
+      return ApiResponse.success({ res, result: { token } })
     } catch (e) {
       console.log(e)
       const message: string = 'Failed to login, please try again'
-      return generateResponseError({ res, message, status: 500 })
+      return ApiResponse.error({ res, message, status: 500 })
     }
   }
 
@@ -78,11 +78,11 @@ class AuthController {
         }
       )
 
-      return res.send(createUser)
+      return ApiResponse.success({ res, message: 'Successfully to create user' })
     } catch (e) {
       console.log(e)
       const message: string = 'Failed to register, please try again'
-      return generateResponseError({ res, message, status: 500 })
+      return ApiResponse.error({ res, message, status: 500 })
     }
   }
 }

@@ -1,6 +1,6 @@
 import { Request, Response } from 'express'
 
-import generateResponseError from '../helpers/generateResponseError'
+import ApiResponse from '../helpers/ApiResponse'
 
 const db = require('../models')
 
@@ -33,11 +33,11 @@ class CategoryController {
         }
       })
 
-      return res.send(categories)
+      return ApiResponse.success({ res, result: { data: categories } })
     } catch (e) {
       console.log(e)
       const message: string = 'Failed to get categories, please try again'
-      return generateResponseError({ res, message, status: 500 })
+      return ApiResponse.error({ res, message, status: 500 })
     }
   }
 
@@ -55,14 +55,14 @@ class CategoryController {
 
       if (!category) {
         const message: string = 'Category not found'
-        return generateResponseError({ res, message, status: 404 })
+        return ApiResponse.error({ res, message, status: 404 })
       }
 
-      return res.send(category)
+      return ApiResponse.success({ res, result: { data: category } })
     } catch (e) {
       console.log(e)
       const message: string = 'Failed to get category, please try again'
-      return generateResponseError({ res, message, status: 500 })
+      return ApiResponse.error({ res, message, status: 500 })
     }
   }
 
@@ -78,13 +78,14 @@ class CategoryController {
         name
       })
 
-      return res.send({
+      return ApiResponse.success({
+        res,
         message: 'Successfully to create category'
       })
     } catch (e) {
       console.log(e)
       const message: string = 'Failed to create category, please try again'
-      return generateResponseError({ res, message, status: 500 })
+      return ApiResponse.error({ res, message, status: 500 })
     }
   }
 
@@ -106,13 +107,14 @@ class CategoryController {
         }
       )
 
-      return res.send({
+      return ApiResponse.success({
+        res,
         message: 'Successfully to update category'
       })
     } catch (e) {
       console.log(e)
       const message: string = 'Failed to update category, please try again'
-      return generateResponseError({ res, message, status: 500 })
+      return ApiResponse.error({ res, message, status: 500 })
     }
   }
 
