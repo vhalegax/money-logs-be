@@ -1,37 +1,13 @@
 import { Request, Response } from 'express'
 
 import ApiResponse from '../helpers/ApiResponse'
-
-const db = require('../models')
+import CategoryService from '../services/CategoryService'
 
 class CategoryController {
-  protected tempVariable: string = 'Init Class CategoryController'
-
-  constructor() {
-    //TODO : Pelajari penggunaan bind
-    console.log(this.tempVariable)
-    this.index = this.index.bind(this)
-    this.create = this.create.bind(this)
-  }
-
-  tempFuncForTestUpdateVariable(msg: string) {
-    console.log('----------------------')
-    console.log('before :', this.tempVariable)
-    this.tempVariable = msg
-    console.log('after :', this.tempVariable)
-    console.log('----------------------')
-  }
-
   async index(req: Request, res: Response): Promise<Response> {
-    this.tempFuncForTestUpdateVariable('last used is index function')
-
     try {
-      const userId = res.locals.credential.id
-      const categories = await db.Category.findAll({
-        where: {
-          user_id: userId
-        }
-      })
+      const categoryService: CategoryService = new CategoryService(req, res)
+      const categories = await categoryService.getAll()
 
       return ApiResponse.success({ res, result: { data: categories } })
     } catch (e) {
@@ -43,15 +19,8 @@ class CategoryController {
 
   async show(req: Request, res: Response): Promise<Response> {
     try {
-      const userId = res.locals.credential.id
-      const categoryId = req.params.id
-
-      const category = await db.Category.findOne({
-        where: {
-          id: categoryId,
-          user_id: userId
-        }
-      })
+      const categoryService: CategoryService = new CategoryService(req, res)
+      const category = await categoryService.get()
 
       if (!category) {
         const message: string = 'Category not found'
@@ -67,16 +36,9 @@ class CategoryController {
   }
 
   async create(req: Request, res: Response): Promise<Response> {
-    this.tempFuncForTestUpdateVariable('last used is create function')
-
     try {
-      const userId = res.locals.credential.id
-      const { name } = req.body
-
-      const createCategory = await db.Category.create({
-        user_id: userId,
-        name
-      })
+      const categoryService: CategoryService = new CategoryService(req, res)
+      await categoryService.create()
 
       return ApiResponse.success({
         res,
@@ -91,21 +53,8 @@ class CategoryController {
 
   async update(req: Request, res: Response): Promise<Response> {
     try {
-      const userId = res.locals.credential.id
-      const categoryId = req.params.id
-      const { name } = req.body
-
-      await db.Category.update(
-        {
-          name
-        },
-        {
-          where: {
-            id: categoryId,
-            user_id: userId
-          }
-        }
-      )
+      const categoryService: CategoryService = new CategoryService(req, res)
+      await categoryService.update()
 
       return ApiResponse.success({
         res,
@@ -123,4 +72,4 @@ class CategoryController {
   }
 }
 
-export default CategoryController
+export default new CategoryController

@@ -1,21 +1,15 @@
 import BaseRoutes from './BaseRoutes'
-import CategoryControllerClass from '../controller/CategoryController'
-
-import createValidator from '../validators/categories/createValidator'
-import updateValidator from '../validators/categories/updateValidator'
+import CategoryController from '../controller/CategoryController'
+import CategoryValidator from '../validators/CategoryValidator'
 
 class CategoryRoutes extends BaseRoutes {
   public routes(): void {
-    console.log('Init Class CategoryRoutes->routes')
-
-    const CategoryController = new CategoryControllerClass()
-
     this.router.get('/', CategoryController.index)
     this.router.get('/:id', CategoryController.show)
-    this.router.post('/', createValidator, CategoryController.create)
-    this.router.put('/:id', updateValidator, CategoryController.update)
+    this.router.post('/', CategoryValidator.create, CategoryController.create)
+    this.router.put('/:id', CategoryValidator.update, CategoryController.update)
     this.router.delete('/:id', CategoryController.delete)
   }
 }
 
-export default CategoryRoutes
+export default new CategoryRoutes().router

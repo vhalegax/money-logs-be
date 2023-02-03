@@ -53,14 +53,9 @@ class App {
   }
 
   protected plugins(): void {
-    // for parsing application/json
-    this.app.use(express.json())
-
-    // for parsing application/xwww-
-    // this.app.use(express.urlencoded());
-
-    // for parsing application//form-data
-    // this.app.use(express.static("public"));
+    this.app.use(express.json()) // for parsing application/json
+    this.app.use(express.urlencoded()) // for parsing application/xwww-
+    this.app.use(express.static('public')) // for parsing application//form-data
 
     this.app.use(morgan('dev'))
     this.app.use(compression())
@@ -69,19 +64,8 @@ class App {
   }
 
   protected routes(): void {
-    /**
-     * Cara kerja APP Class Base.
-     * 1. Saat APP pertama kali menyala dia akan membuat New Class Routes (hanya 1x new class saat turn on app)
-     * 2. Kemudian membuat New Class Controller (hanya 1x new class saat turn on app).
-     */
-
-    /**
-     * Notes !
-     * Penulisan category routes sama dengan penulisan routes yang lain, hanya lebih effisien penulisan routes yang lain.
-     */
-
     this.app.use('/v1/auth', AuthRoutes)
-    this.app.use('/v1/categories', authMiddleware, new CategoryRoutes().router)
+    this.app.use('/v1/categories', authMiddleware, CategoryRoutes)
     this.app.use('/v1/money-logs', authMiddleware, MoneyLogRoutes)
     this.app.use('/v1/users', authMiddleware, UserLogRoutes)
   }
